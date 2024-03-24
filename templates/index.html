@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        input[type="text"] {
+            width: calc(100% - 120px);
+            padding: 12px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]::placeholder {
+            color: #aaa;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #0056b3;
+        }
+        
+        button {
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        #imageContainer {
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        img {
+            max-width: 200px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Image Generation</h1>
+        <input type="text" id="searchInput" placeholder="Enter search term" style="text-transform: capitalize;">
+        <br><br>
+        <button onclick="searchImages()">Generate Images</button>
+        <div id="imageContainer"></div>
+    </div>
+    <script>
+        function searchImages() {
+            var searchTerm = document.getElementById("searchInput").value;
+            fetchImages(searchTerm);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !document.getElementById("searchInput").value.trim()) {
+                alert("Please enter a search term!");
+            }
+        }
+
+        function fetchImages(searchTerm) {
+            fetch("/search?term=" + searchTerm)
+            .then(response => response.json())
+            .then(data => {
+                displayImages(data);
+            })
+            .catch(error => {
+                console.error('Error fetching images:', error);
+            });
+        }
+
+        function displayImages(images) {
+            var container = document.getElementById("imageContainer");
+            container.innerHTML = "";
+            images.forEach(image => {
+                var imgElement = document.createElement("img");
+                imgElement.src = image;
+                container.appendChild(imgElement);
+            });
+        }
+
+        document.getElementById("searchInput").addEventListener("keypress", handleKeyPress);
+    </script>
+    
+</body>
+</html>
