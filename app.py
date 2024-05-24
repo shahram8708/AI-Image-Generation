@@ -16,7 +16,7 @@ def search():
     if not term:
         return jsonify([])
     else:
-        google_api_url = f"https://www.googleapis.com/customsearch/v1?q={term}&cx={CX}&key={API_KEY}&searchType=image"
+        google_api_url = f"https://www.googleapis.com/customsearch/v1?q={term}&cx={CX}&key={API_KEY}&searchType=image&safe=active"
         response = requests.get(google_api_url)
         if response.status_code == 200:
             data = response.json()
