@@ -3,8 +3,8 @@ import requests
 
 app = Flask(__name__)
 
-API_KEY = 'AIzaSyDxdLTyUowK86sjco6AhJZRdWFFEtwyu5Y'
-CX = 'b45dc313d50ac4cef'
+API_KEY = 'API_Key'
+CX = 'CX'
 
 @app.route('/')
 def index():
